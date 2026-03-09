@@ -1,0 +1,18 @@
+CREATE OR REPLACE PROCEDURE eliminarTablas()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Primero eliminar tablas que dependen de otras
+    DROP TABLE IF EXISTS Log CASCADE;
+    DROP TABLE IF EXISTS RegistroAsistencia CASCADE;
+    DROP TABLE IF EXISTS Jornada CASCADE;
+    DROP TABLE IF EXISTS ParametrosPersona CASCADE;
+    DROP TABLE IF EXISTS Usuario CASCADE;
+    DROP TABLE IF EXISTS Curso CASCADE;
+    DROP TABLE IF EXISTS Salon CASCADE;
+    DROP TABLE IF EXISTS Fecha CASCADE;
+    DROP TABLE IF EXISTS TipoAsistencia CASCADE;
+    DROP TABLE IF EXISTS TipoUsuario CASCADE;
+
+END;
+$$;
