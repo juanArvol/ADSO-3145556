@@ -1,0 +1,154 @@
+@startuml
+left to right direction
+skinparam roundcorner 5
+skinparam Linetype ortho
+
+entity "user" {
+  * id : pk
+  --
+  id_person : fk
+  name
+  email
+  password
+}
+entity "person" {
+    * id : pk
+    --
+    name
+    email
+    phone
+}
+entity "module" {
+    * id : pk
+    --
+    name
+    description
+}
+entity "view" {
+    
+'esta tabla es para definir las vistas a las que se puede acceder desde cada módulo, por ejemplo, el módulo de gestión de productos puede tener vistas como "agregar producto", "actualizar producto", etc.
+    * id : pk
+    --
+    name
+    description
+}
+
+entity "view_module" {
+    'Es una tabla de relación entre view y module indicando a qué módulo pertenece cada vista
+    * id_view : pk
+    * id_module : pk
+}
+entity "role" {
+  * id : pk
+  --
+  name
+  description
+}
+entity "action" {
+    * id : pk
+    --
+    name
+    description
+}
+entity "view_action" {
+    'Es una tabla de relación entre view y action indicando qué acciones se pueden realizar en cada vista
+    * id_view : pk
+    * id_action : pk
+}
+entity "role_module" { 
+    'Es una tabla de relación entre role y module indicando qué módulos tiene acceso cada rol
+  * id_role : pk
+  * id_module : pk
+}
+
+entity "user_role" {
+  * id_user : pk
+  * id_role : pk
+}
+
+
+entity "cart" {
+  * id : pk
+  --
+  * id_user : fk
+  created_at
+  expires_at
+}
+
+entity "cart_detail" {
+  * id : pk
+  --
+  * id_cart : fk
+  * id_product : fk
+  quantity
+}
+
+entity "product" {
+  * id : pk
+  --
+    name
+    description
+    price
+
+}
+entity "inventory" {
+  * id : pk
+  --
+  * id_product : fk
+  stock
+}
+
+entity "product_category" {
+  * id_category : pk
+  * id_product : pk
+}
+
+entity "category" {
+  * id : pk
+  --
+  name
+}
+
+entity "order" {
+  * id : pk
+  --
+  * id_cart : fk
+  * id_user : fk
+  state
+  orderCreate
+  total
+  payment_method
+  pickup_code
+}
+
+entity "order_detail" {
+  * id_orderDetail : pk
+  --
+  * id_order : fk
+  * id_product : fk
+  amount
+  price
+}
+
+' Relaciones
+user ||--|| cart
+user ||--|{ order
+person ||--|| user
+module ||--|{ view_module
+view ||--|{ view_module
+view ||--|{ view_action
+action ||--|{ view_action
+role ||--|{ role_module
+module ||--|{ role_module
+user ||--|{ user_role
+role ||--|{ user_role
+cart ||---o{ cart_detail
+cart ||--o| order
+order ||--|{ order_detail
+product ||--|{ cart_detail
+product ||--|{ order_detail
+product ||---|{ product_category
+product ||--|| inventory
+category ||---|{ product_category
+
+@enduml

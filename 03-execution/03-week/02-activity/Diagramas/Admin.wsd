@@ -1,0 +1,44 @@
+@startuml
+title Admin Use Case Diagram
+left to right direction
+
+actor "Admin" as a1
+actor "Admin" as a2
+actor "Admin" as a3
+actor "Admin" as a4
+
+rectangle "Product Management" {
+    a1 -- (manage products)
+    (manage products) ..> (add product) : <<include>>
+    (add product) ..> (enter product details) : <<include>>
+    (enter product details) ..> (validate product details) : <<include>>
+    (validate product details) ..> (save product) : <<include>>
+    (manage products) ..> (update product) : <<include>>
+    (update product) ..> (select product to update) : <<include>>
+    (select product to update) ..> (modify product details) : <<include>>
+    (modify product details) ..> (validate modified details) : <<include>>
+    (validate modified details) ..> (save updated product) : <<include>>
+    (manage products) ..> (delete product) : <<include>>
+    (delete product) ..> (select product to delete) : <<include>>
+    (select product to delete) ..> (confirm deletion) : <<include>>
+}
+
+rectangle "see orders" {
+    a2 -- (see orders)
+    (see orders) ..> (view order list) : <<include>>
+    (view order list) ..> (filter orders) : <<include>>
+    (filter orders) ..> (view order details) : <<include>>
+    (view order details) ..> (change order status) : <<extend>>
+}
+
+rectangle "consult history" {
+    a3 -- (consult history)
+    (consult history) ..> (view sales history) : <<include>>
+}
+
+rectangle "confirmatio of payment" {
+    a4 -- (confirmation of payment)
+    (confirmation of payment) ..> (scanning proof payments) : <<include>>
+    (scanning proof payments) ..> (receive payment) : <<include>>
+    (receive payment) ..> (deliver product) : <<include>>
+}

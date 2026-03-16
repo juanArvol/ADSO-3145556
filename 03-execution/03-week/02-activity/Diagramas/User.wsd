@@ -1,0 +1,67 @@
+@startuml
+left to right direction 
+
+
+actor "User" as u1
+actor "User" as u2
+actor "User" as u3
+actor "User" as u4
+actor "User" as u5
+actor "User" as u6
+u1 -[hidden]down-> u2
+u2 -[hidden]down-> u3
+u3 -[hidden]down-> u4
+u4 -[hidden]down-> u5
+u5 -[hidden]down-> u6
+
+rectangle "Registration" {
+    u1 -- (login)
+    (login) ..> (new user) : <<extend>>
+    (new user) ..> (enter registration data) : <<include>>
+    (enter registration data) ..> (validate data) : <<include>>
+    (validate data) ..> (send email) : <<include>>
+    (login) ..> (Remember account) : <<include>>  
+    (login) ..> (enter login data) : <<include>>
+    (enter login data) ..> (validate login data) : <<include>>
+    (validate login data) ..> (grant access) : <<include>>
+}
+
+rectangle "Password Recovery" {
+    u2 -- (password recovery)
+    (password recovery) ..> (enter email) : <<include>>
+    (enter email) ..> (validate email) : <<include>>
+    (validate email) ..> (send recovery email) : <<include>>
+}
+
+rectangle "see products" {
+    u3 -- (see products)
+    (see products) ..> (browse products) : <<include>>
+    (browse products) ..> (filter products) : <<include>>
+    (filter products) ..> (view product details) : <<include>>
+}
+
+rectangle "Shopping Cart" {
+    u4 -- (manage shopping cart)
+    (manage shopping cart) ..> (add product to cart) : <<include>>
+    (add product to cart) ..> (update cart) : <<include>>
+    (update cart) ..> (remove product from cart) : <<include>>
+    (manage shopping cart) ..> (view cart) : <<include>>
+}
+
+rectangle "Checkout" {
+    u5 -- (checkout)
+    (checkout) ..> (confirm products) : <<include>>
+    (confirm products) ..> (receive proof of payment) : <<include>>
+    (receive proof of payment) ..> (go to the cafeteria) : <<include>>
+    (go to the cafeteria) ..> (select payment method) : <<include>>
+    (select payment method) ..> (process payment) : <<include>>
+    (process payment) ..> (receive product) : <<include>>
+}
+
+rectangle "see state of order" {
+    u6 -- (see state of order)
+    (see state of order) ..> (track order) : <<include>>
+    (track order) ..> (view product status) : <<include>>
+}
+
+@enduml

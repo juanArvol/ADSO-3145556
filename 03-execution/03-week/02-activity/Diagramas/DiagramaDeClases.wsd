@@ -1,0 +1,129 @@
+@startuml
+left to right direction
+skinparam roundcorner 10
+skinparam linetype ortho
+
+
+' HERENCIA
+
+class Person {
+  -id : int
+  -name : String
+  -email : String
+  -phone : String
+}
+
+class User {
+  -password : String
+  +login()
+  +logout()
+}
+
+Person <|-- User
+
+' SEGURIDAD
+
+class Role {
+  -id : int
+  -name : String
+  -description : String
+}
+
+class Module {
+  -id : int
+  -name : String
+  -description : String
+}
+
+class View {
+  -id : int
+  -name : String
+  -description : String
+}
+
+class Action {
+  -id : int
+  -name : String
+  -description : String
+}
+
+User "1" -- "*" Role
+Role "*" -- "*" Module
+Module "1" -- "*" View
+View "*" -- "*" Action
+
+
+' PRODUCTOS
+
+class Product {
+  -id : int
+  -name : String
+  -description : String
+  -price : Double
+  +changePrice()
+}
+
+class Inventory {
+  -stock : Integer
+  +increaseStock()
+  +decreaseStock()
+}
+
+class Category {
+  -id : int
+  -name : String
+}
+
+Product "1" -- "1" Inventory
+Product "*" -- "*" Category
+
+' CARRITO
+
+class Cart {
+  -id : int
+  -id_cartDetail : CartDetail
+  -createdAt : Date
+  -expiresAt : Date
+  +addProduct()
+  +removeProduct()
+  +calculateTotal()
+}
+
+class CartDetail {
+  -quantity : Integer
+  +subtotal()
+}
+
+User "1" -- "0..*" Cart
+Cart "1" *-- "*" CartDetail
+CartDetail "*" -- "1" Product
+
+
+' ORDEN
+
+class Order {
+  -id : int
+  -id_orderDetail : OrderDetail
+  -state : String
+  -orderDate : Date
+  -total : Double
+  -paymentMethod : String
+  -pickupCode : String
+  +calculateTotal()
+  +changeState()
+  +addDetail()
+  +removeDetail()
+}
+
+class OrderDetail {
+  -amount : Integer
+  -price : Double
+  +subtotal()
+}
+
+User "1" -- "*" Order
+Order "1" *-- "*" OrderDetail
+OrderDetail "*" -- "1" Product
+Cart "1" --> "0..1" Order
+
+@enduml
